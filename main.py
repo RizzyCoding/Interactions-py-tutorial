@@ -23,19 +23,14 @@ async def on_ready():
 # Commanders are registered through this decorator. You may either explicitly perform the creation
 # and registration of the application command through the decorator, or by modifying the name of the
 # coroutine and argument signature.
-@bot.command(
-    name="copy",
-    description="I will copy what you say!",
-    options=[
-        interactions.Option(
-            type=interactions.OptionType.STRING,
-            name="text",
-            description="What you want me to say!",
-            required=True,
-        ),
-    ],
-)
+# The name of the command defaults to the coroutine's, and a description may be provided via a
+# docstring in the body of the coroutine.
+# options can be specified in the command decorator or by the use of the @option decorator which
+# automatically infers the option name and type from the corresponding parameter.
+@bot.command()
+@interactions.option("What you want me to say!")
 async def copy(ctx: interactions.CommandContext, text: str):
+    """I will copy what you say!"""
     await ctx.send(text)
 
 # interactions.py requires what's called a "runner call." This is the entry point to starting a bot connection.
